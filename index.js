@@ -30,6 +30,12 @@ app.use(offerRoutes);
 const importdataRoutes = require("./routes/importdata");
 app.use(importdataRoutes);
 
+app.get("/", (req, res) => {
+   res.status(200).send(
+      "<html><header><title>Vinted-Api</title></header><body bgcolor='E3F0F0'><h1><center>Vinted-api</center></h1><p></p><p></p><p>Le Réacteur - Grégory Le Terte 2021</p></body></html>"
+   );
+});
+
 app.all("*", (req, res) => {
    res.status(404).json({ message: "Cette route n'existe pas" });
 });
