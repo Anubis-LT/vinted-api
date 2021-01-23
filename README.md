@@ -1,8 +1,4 @@
-# vinted-api
-
-Reference-style:
 ![alt text][logo]
-
 [logo]: https://github.com/Anubis-LT/vinted-api/blob/master/pictures/banvinted.png "Vinted-api"
 
 Description :
