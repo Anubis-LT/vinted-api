@@ -38,7 +38,7 @@ API_SECRET= "your API_SECRET Info account cloudinary"
 ```
 
 Run :
-`npx nodemon insdex.js`
+`npx nodemon index.js`
 
 # Routes List :
 
@@ -60,6 +60,10 @@ PUT :
 DELETE :
 
 -  in progress...
+
+![alt text][logo1]
+
+[logo1]: https://github.com/Anubis-LT/vinted-api/blob/master/pictures/captureReadme.png "Example routes"
 
 https://greg-vinted-api.herokuapp.com/
 
