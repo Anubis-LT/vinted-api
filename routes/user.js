@@ -8,19 +8,17 @@ const User = require("../models/User");
 
 router.post("/user/signup", async (req, res) => {
    try {
-      // Rechercher dans la BDD si un user possède déjà cet email
+      // Search Bdd, if the user already has this email
       const user = await User.findOne({ email: req.fields.email });
 
       if (!user) {
-         // Si non, on fait la suite...
-         // est-ce que je reçois tout ce qu'il faut ? (email, username, password)
+         // All fields are complete ?
          if (req.fields.email && req.fields.username && req.fields.password) {
-            // Je peux faire la création
-            // Etape 1 : encrypter le mot de passe
+            // Step 1 : crypt paswword
             const salt = uid2(64);
             const hash = SHA256(req.fields.password + salt).toString(encBase64);
             const token = uid2(64);
-            // Etape 2 : créer le nouvel utilisateur
+            // Step 2 : Create a new user
             const newUser = new User({
                email: req.fields.email,
                account: {
@@ -31,9 +29,9 @@ router.post("/user/signup", async (req, res) => {
                hash: hash,
                salt: salt,
             });
-            // Etape 3 : sauvegarde de l'utilisateur
+            // Step 3 : Backup user
             await newUser.save();
-            // Etape 4 : répondre au client
+            // Step 4 : reply to the user
             res.status(200).json({
                _id: newUser._id,
                token: newUser.token,
@@ -46,7 +44,7 @@ router.post("/user/signup", async (req, res) => {
             res.status(400).json({ message: "Missing parameters" });
          }
       } else {
-         // Si oui, on renvoie un message d'erreur
+         // If yes, send message error
          res.status(400).json({ message: "This email already has an account" });
       }
    } catch (error) {
@@ -56,16 +54,15 @@ router.post("/user/signup", async (req, res) => {
 
 router.post("/user/login", async (req, res) => {
    try {
-      // Trouve dans la BDD le user qui veut se connecter
+      // Search in the BBD  user connect
       const user = await User.findOne({ email: req.fields.email });
       if (user) {
-         //   console.log(user);
-         // Est-ce qu'il a rentré le bon mot de passe ?
-         // générer un nouveau hash avec le password rentré + le salt du user trouvé
+         // password is Ok ?
+         // generate a new hash with the entered password + the salt of the found user
          const newHash = SHA256(req.fields.password + user.salt).toString(
             encBase64
          );
-         // Si ce hash est le même que le hash du user trouvé => OK
+         //  If this hash is the same as the hash of the found user => OK
          if (newHash === user.hash) {
             res.status(200).json({
                _id: user._id,
@@ -76,7 +73,7 @@ router.post("/user/login", async (req, res) => {
                },
             });
          } else {
-            // Sinon => Erreur
+            // Error
             res.status(401).json({ message: "Unauthorized" });
          }
       } else {

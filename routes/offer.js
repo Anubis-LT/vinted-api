@@ -8,18 +8,6 @@ const Offer = require("../models/Offer");
 
 router.post("/offer/publish", isAuthenticated, async (req, res) => {
    try {
-      // console.log(req.fields);
-      // console.log(req.files.picture.path);
-
-      // console.log(req.user);
-
-      // const title = req.fields.title
-      // const size = req.fields.size
-      // const title = req.fields.title
-      // const title = req.fields.title
-      // const title = req.fields.title
-      // const title = req.fields.title
-
       // Destructuring
       const {
          title,
@@ -32,7 +20,7 @@ router.post("/offer/publish", isAuthenticated, async (req, res) => {
          color,
       } = req.fields;
 
-      // Créer une nouvelle annonce
+      // Create a new offer
       const newOffer = new Offer({
          product_name: title,
          product_description: description,
@@ -54,23 +42,21 @@ router.post("/offer/publish", isAuthenticated, async (req, res) => {
                EMPLACEMENT: city,
             },
          ],
-         // Pour faire une réf je peux soit envoyer l'id, soit envoyer le document complet
+         // To make a reference I can either send the id, or send the complete document.
          owner: req.user,
       });
 
-      // console.log(newOffer);
-
-      // Envoyer l'image à cloudinary
+      // Send picture at cloudinary
       const result = await cloudinary.uploader.upload(req.files.picture.path, {
          folder: `/vinted-andromeda/offers/${newOffer._id}`,
       });
 
-      // Ajouter le resultat de l'upload dans newOffer
+      // Add the result for upload in newOffer
       newOffer.product_image = result;
-      // Sauvegarder l'annonce
+      // backup offer
       await newOffer.save();
 
-      // Répondre au client
+      // Send result
       res.status(200).json(newOffer);
    } catch (error) {
       res.status(400).json({ error: error.message });
@@ -81,9 +67,9 @@ router.get("/offers", async (req, res) => {
    try {
       let filters = {};
 
-      // Si je reçois une query title
+      // If I receive a query title
       if (req.query.title) {
-         // j'ajoute une clé product_name à l'objet filters
+         // Add a product_name key to the filters object
          filters.product_name = new RegExp(req.query.title, "i");
       }
 
@@ -113,24 +99,24 @@ router.get("/offers", async (req, res) => {
       }
 
       let page;
-      // forcer à afficher la page 1 si la query page n'est pas envoyée ou est envoyée avec 0 ou < -1
+      // Force page 1 to be displayed if the query page is not sent or is sent with 0 or < -1.
       if (req.query.page < 1) {
          page = 1;
       } else {
-         // sinon, page est égale à ce qui est demandé
+         //  page is equal to what is requested
          page = Number(req.query.page);
       }
 
-      // SKIP = ignorer les n premiers résultats
-      // L'utilisateur demande la page 1 (on ignore les 0 premiers résultats)
+      // SKIP = ignore the first n results
+      // The user asks for page 1 (the first 0 results are ignored)
       // (page - 1) * limit = 0
 
-      // L'utilisateur demande la page 2 (on ignore les limit premiers résultats)
-      // (page - 1) * limit = 5 (si limit = 5)
+      // The user asks for page 2 (we ignore the first results limits)
+      // (page - 1) * limit = 5 (if limit = 5)
 
       let limit = Number(req.query.limit);
 
-      // Renvoie le nombre de résultats trouvés en fonction des filters
+      // Returns the number of results found according to the filters.
       const count = await Offer.countDocuments(filters);
 
       const offers = await Offer.find(filters)
