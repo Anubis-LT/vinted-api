@@ -3,8 +3,23 @@
 Reference-style:
 ![alt text][logo]
 
-[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 2"
+[logo]: https://github.com/Anubis-LT/vinted-api/blob/master/pictures/banvinted.png "Vinted-api"
 
-Lien heroku :
+Description :
+
+Install :
+
+-  Clone the repository
+-  In the folder of
+
+DataBase :
+
+Configure :.env
+
+Run :
+
+Rules :
+
 https://greg-vinted-api.herokuapp.com/
-<img src="./pictures/banvinted.png" alt="Vinted Api"/>
+
+Project student bootcamp - LE REACTEUR - 2021
