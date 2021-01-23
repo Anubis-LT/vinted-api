@@ -3,6 +3,9 @@ const formidable = require("express-formidable");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const cloudinary = require("cloudinary");
+const http = require("http");
+const fs = require("fs").promises;
+
 require("dotenv").config();
 
 const app = express();
@@ -30,10 +33,23 @@ app.use(offerRoutes);
 const importdataRoutes = require("./routes/importdata");
 app.use(importdataRoutes);
 
-app.get("/", (req, res) => {
+/*app.get("/", (req, res) => {
    res.status(200).send(
       "<html><header><title>Vinted-Api</title></header><body bgcolor='E3F0F0'><h1><center>Vinted-api</center></h1><p></p><p></p><p>Le Réacteur - Grégory Le Terte 2021</p></body></html>"
    );
+});*/
+app.get("/", (req, res) => {
+   fs.readFile("./html/index.html")
+      .then((contents) => {
+         res.setHeader("Content-Type", "text/html");
+         res.writeHead(200);
+         res.end(contents);
+      })
+      .catch((err) => {
+         res.writeHead(500);
+         res.end(err);
+         return;
+      });
 });
 
 app.all("*", (req, res) => {

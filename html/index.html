@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<!--
+
+
+             /$$    /$$ /$$             /$$                     /$$
+            | $$   | $$|__/            | $$                    | $$
+            | $$   | $$ /$$ /$$$$$$$  /$$$$$$    /$$$$$$   /$$$$$$$
+            |  $$ / $$/| $$| $$__  $$|_  $$_/   /$$__  $$ /$$__  $$
+             \  $$ $$/ | $$| $$  \ $$  | $$    | $$$$$$$$| $$  | $$
+              \  $$$/  | $$| $$  | $$  | $$ /$$| $$_____/| $$  | $$
+               \  $/   | $$| $$  | $$  |  $$$$/|  $$$$$$$|  $$$$$$$
+                \_/    |__/|__/  |__/   \___/   \_______/ \_______/
+
+Api Site for the bootcamp Le Reacteur Gregory Le Terte 2021 Promo Andromeda    
+
+-->
+<head>
+    <title>Vinted-Api par Gregory Le Terte</title>
+    <link rel="icon" href="../pictures/favicon.ico" />
+    <style>
+        *,
+        html {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-family: "Trebuchet MS", Helvetica, sans-serif;
+        }
+
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color:#09b1ba;
+        }
+
+        .center {
+            width: 100%;
+            height: 50%;
+            margin: 0;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;            
+            text-align: center;
+        }
+        .footer {
+            
+            margin: 0;
+            position: absolute;
+            top: 98%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;            
+            text-align: center;
+        }
+        h1 {
+            font-size: 144px;
+        }
+
+        p {
+            font-size: 64px;
+        }
+        .p_post {
+            border-width:1px;
+            border-style:dotted;
+            border-color:black;
+            font-size: 20px;
+            color:#242424
+        }
+        .p_post-blue {
+            background-color: #c3e9fa;
+            border-color:#0298dd;
+        }
+        .p_post-green {
+            background-color: #d3f3d3;
+            border-color:#08aa08;
+        }
+        .p_post-orange {
+            background-color: #f7e9cb;
+            border-color:#e4a319;
+        }
+        .p_post-red {
+            background-color: #f1d4ce;
+            border-color: #d12709;
+        }
+
+
+
+        .bloc {
+            width: 80%;
+            height: 50%;
+            top: 40%;
+            margin-left: 10%;            
+            position: absolute;
+            color: white;
+            background-color:#ffffff;          
+        }
+        .blocroutes {
+            width: 80%;
+            height: 50%;
+            top: 40%;
+            margin-left: 10%;            
+            position: absolute;
+            color: white;
+            background-color:#087d83;          
+        }
+        .pbloc {
+            font-size: 22px;
+            margin-left: 15px;
+            color: rgb(0, 0, 0);
+        }
+        .button {
+            
+            border: none;
+            color: white;
+            font-weight: bold;
+            width: 150px;
+            padding: 6px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+            font-size: 20px;
+            margin: 4px 2px;
+            margin-left: 15px;
+            cursor:default;
+        }
+        .button-blue {
+            background-color: #0298dd;
+        }
+        .button-green {
+            background-color: #08aa08;
+        }
+        .button-orange {
+            background-color: #e4a319;
+        }
+        .button-red {
+            background-color: #d12709;
+        }
+        ul{
+            margin-left: 85px;  
+        }
+}
+    </style>
+</head>
+
+<body>
+    <div class="center">
+        <h1>Vinted Api !</h1>
+        <p>Soyez Happy :-) </p>
+        <p></p>
+    </div>
+    
+    <div class="bloc">
+        <p class="p_post">----> Link github : await...</p>
+        <p class="pbloc">default</p>
+        <p class="p_post p_post-blue"><button class="button button-blue">GET</button> /index</p>
+        <p> </p>
+        <p class="pbloc">Routes</p>
+        
+        <div class="p_post p_post-blue"><button class="button button-blue">GET</button>
+            <p class="p_post">
+                <ul>                    
+                    <li>Offer : (List offers) /offer/</li>                    
+                </ul>
+            </p>
+        </div>
+    
+        <p> </p>
+        <div class="p_post p_post-green"><button class="button button-green">POST</button>
+            <p class="p_post">
+                <ul>
+                    <li>User : (Create account) /user/signup</li>
+                    <li>User : (Login account) /user/login</li>
+                    <li>Offer : (Create offers) /offer/publish</li>                    
+                </ul>
+            </p>
+        </div>
+        
+        <p> </p>
+        <p class="p_post p_post-orange"><button class="button button-orange">PUT</button></p>
+        <p> </p>
+        
+        <p class="p_post p_post-red"><button class="button button-red">DELETE</button></p>
+
+    </div>
+    
+</body>
+<footer>
+    <div class="footer">
+        Vinted-Api  - Gregory Le Terte - V 0.1 - Le Reacteur - 2021 
+    </div>
+</footer>
+</html>
