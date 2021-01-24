@@ -68,8 +68,7 @@ Api Site for the bootcamp Le Reacteur Gregory Le Terte 2021 Promo Andromeda
         }
         .p_post {
             border-width:1px;
-            border-style:dotted;
-            border-color:black;
+            border-style:solid;
             font-size: 20px;
             color:#242424
         }
@@ -91,26 +90,26 @@ Api Site for the bootcamp Le Reacteur Gregory Le Terte 2021 Promo Andromeda
         }
 
         .bloc {
-            width: 80%;
-            height: 50%;
-            top: 40%;
-            margin-left: 10%;            
+            width: 50%;
+            height: 40%;
+            top: 35%;
+            margin-left: 25%;            
             position: absolute;
             color: white;
             background-color:#ffffff;          
         }
         .blocroutes {
-            width: 80%;
+            width: 50%;
             height: 50%;
-            top: 40%;
-            margin-left: 10%;            
+            top: 35%;
+            margin-left:25%;            
             position: absolute;
             color: white;
             background-color:#087d83;          
         }
         .pbloc {
             font-size: 22px;
-            margin-left: 15px;
+            margin-left: 15px;            
             color: rgb(0, 0, 0);
         }
         .button {
@@ -130,7 +129,7 @@ Api Site for the bootcamp Le Reacteur Gregory Le Terte 2021 Promo Andromeda
             cursor:default;
         }
         .button-blue {
-            background-color: #0298dd;
+            background-color: #0298dd;            
         }
         .button-green {
             background-color: #08aa08;
@@ -156,41 +155,58 @@ Api Site for the bootcamp Le Reacteur Gregory Le Terte 2021 Promo Andromeda
     </div>
     
     <div class="bloc">
-        <p class="p_post">
-            Repository Github : <a href="https://github.com/Anubis-LT/vinted-api">https://github.com/Anubis-LT/vinted-api</a>
-        </p>
-        <p></p>
+        <p class="pbloc"></p>
+        <p class="pbloc"></p>
+        <p class="pbloc" style="text-align: right;margin-right: 10px;">Reinitialiser la base avec 4 Utilisateurs et 20 Offres <a href="/initbdd">cliquez ici</a></p>
+
         <p class="pbloc">default</p>
         <p class="p_post p_post-blue"><button class="button button-blue">GET</button> / Documentation page</p>
         <p> </p>
         <p class="pbloc">Routes</p>
         
         <div class="p_post p_post-blue"><button class="button button-blue">GET</button>
-            <p class="p_post">
-                <ul>                    
-                    <li>Offer : (List offers) /offer/</li>                    
+           
+                <ul>
+                    <li>/users    : <i>Liste des utilisateurs</i> </li>                    
+                    <li>/offers    : <i>Liste des offres</i> </li>                    
                 </ul>
-            </p>
+           
         </div>
     
         <p> </p>
         <div class="p_post p_post-green"><button class="button button-green">POST</button>
-            <p class="p_post">
+          
                 <ul>
-                    <li>User : (Create account) /user/signup</li>
-                    <li>User : (Login account) /user/login</li>
-                    <li>Offer : (Create offers) /offer/publish</li>                    
-                </ul>
-            </p>
+                    <li>/user/signup    : Creation d'utilisateurs </li>
+                    <li>/user/:id    : Voir un utilisateur precis </li>                    
+                    <li>/user/login     : Login au compte </li>
+                    <li>/offer/publish  : Creation d offres </li>
+                    <li>/offer/:id  : Voir une offre precise </li>                                                     
+                </ul>          
         </div>
+
         
         <p> </p>
         <p class="p_post p_post-orange"><button class="button button-orange">PUT</button></p>
         <p> </p>
         
-        <p class="p_post p_post-red"><button class="button button-red">DELETE</button></p>
+        <div class="p_post p_post-red"><button class="button button-red">DELETE</button>
+            <ul>
+                <li>/user/:id    : Supprimer un utilisateur avec ses offres </li>
+                <li>/offer/:id  : Supprimer une offre </li>                                        
+            </ul>
 
+        </div>
+
+   
+      <div>
+       
+        <p class="p_post">
+            Repository Github : <a href="https://github.com/Anubis-LT/vinted-api">https://github.com/Anubis-LT/vinted-api</a>
+        </p>
+        
     </div>
+</div>
     
 </body>
 <footer>

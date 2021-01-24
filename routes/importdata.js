@@ -9,8 +9,27 @@ const User = require("../models/User");
 const Offer = require("../models/Offer");
 let articlelopp = 1;
 
-router.get("/importdata", async (req, res) => {
+router.get("/initbdd", async (req, res) => {
    try {
+      // delete all datas
+      await User.remove({}),
+         function (err) {
+            if (err) {
+               console.log(err);
+            } else {
+               res.end("success");
+            }
+         };
+
+      await Offer.remove({}),
+         function (err) {
+            if (err) {
+               console.log(err);
+            } else {
+               res.end("success");
+            }
+         };
+
       const users = {
          user1: {
             email: "corinne@lereacteur.io",
@@ -329,7 +348,7 @@ router.get("/importdata", async (req, res) => {
             hash: hash,
             salt: salt,
          });
-         const user = await newUser.save();
+         await newUser.save();
 
          // create article
          for (i_article = 1; i_article <= 5; i_article++) {
@@ -357,7 +376,7 @@ router.get("/importdata", async (req, res) => {
                   },
                ],
                // add user
-               owner: user,
+               owner: newUser,
             });
 
             /*  // send picture à cloudinary
@@ -370,11 +389,14 @@ router.get("/importdata", async (req, res) => {
 
             // add result upload in newOffer
             newOffer.product_image = result;*/
-            console.log("Ok tout c'est bien passé");
+
             await newOffer.save();
          }
       }
-      res.status(200).send("Import completed ");
+      console.log("Ok base réinitialisée");
+      res.status(200).send(
+         "------------- Base de donnée réinitialisée avec succès. Import de 4 users et de 20 offres-------------"
+      );
    } catch (error) {
       res.status(400).json({ error: error.message });
    }

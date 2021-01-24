@@ -5,6 +5,33 @@ const SHA256 = require("crypto-js/sha256");
 const encBase64 = require("crypto-js/enc-base64");
 
 const User = require("../models/User");
+const Offer = require("../models/Offer");
+
+router.get("/users", async (req, res) => {
+   try {
+      // Returns the number of results found
+      const count = await User.countDocuments();
+
+      const users = await User.find();
+      res.status(200).json({
+         count: count,
+         users: users,
+      });
+   } catch (error) {
+      res.status(400).json({ error: error.message });
+   }
+});
+
+router.get("/users/:id", async (req, res) => {
+   try {
+      // Returns user with id
+
+      const users = await User.findOne({ _id: req.params.id });
+      res.status(200).json({ users: users });
+   } catch (error) {
+      res.status(400).json({ error: error.message });
+   }
+});
 
 router.post("/user/signup", async (req, res) => {
    try {
@@ -79,6 +106,28 @@ router.post("/user/login", async (req, res) => {
       } else {
          res.status(401).json({ message: "Unauthorized" });
       }
+   } catch (error) {
+      res.status(400).json({ error: error.message });
+   }
+});
+
+router.delete("/users/:id", async (req, res) => {
+   try {
+      // Returns user with id
+      const offers = await Offer.find({ owner: req.params.id });
+
+      for (const property in offers) {
+         console.log(`Suppresion des offres ${property}: ${offers[property]}`);
+         await Offer.findByIdAndDelete(offers[property]);
+      }
+
+      await User.deleteOne({ _id: req.params.id })
+         .then(() =>
+            res
+               .status(200)
+               .json({ message: "Utilisateur supprimé avec ses offres !" })
+         )
+         .catch((error) => res.status(400).json({ error }));
    } catch (error) {
       res.status(400).json({ error: error.message });
    }

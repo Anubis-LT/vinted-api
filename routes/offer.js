@@ -133,4 +133,27 @@ router.get("/offers", async (req, res) => {
    }
 });
 
+router.get("/offers/:id", async (req, res) => {
+   try {
+      // Returns user with id
+      // Problem with populate
+      const offers = await Offer.findById(req.params.id).populate("user");
+      res.status(200).json({ offers: offers });
+   } catch (error) {
+      res.status(400).json({ error: error.message });
+   }
+});
+
+router.delete("/offers/:id", async (req, res) => {
+   try {
+      // Returns user with id
+      // Problem with populate
+      await Offer.deleteOne({ _id: req.params.id })
+         .then(() => res.status(200).json({ message: "Offre supprimée !" }))
+         .catch((error) => res.status(400).json({ error }));
+   } catch (error) {
+      res.status(400).json({ error: error.message });
+   }
+});
+
 module.exports = router;
