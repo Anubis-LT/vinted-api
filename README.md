@@ -63,7 +63,7 @@ DELETE :
 
 ![alt text][logo1]
 
-[logo1]: https://github.com/Anubis-LT/vinted-api/blob/master/pictures/captureReadme.png "Example routes"
+[logo1]: https://github.com/Anubis-LT/vinted-api/blob/master/pictures/routes.png "Example routes"
 
 https://greg-vinted-api.herokuapp.com/
 
