@@ -59,7 +59,8 @@ PUT :
 
 DELETE :
 
--  in progress...
+-  "/user/:id" Delete user whith offers
+-  "/offer/:id" Delete offer
 
 ![alt text][logo1]
 
