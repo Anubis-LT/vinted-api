@@ -12,7 +12,7 @@ let articlelopp = 1;
 router.get("/initbdd", async (req, res) => {
    try {
       // delete all datas
-      await User.remove({}),
+      await User.deleteMany({}),
          function (err) {
             if (err) {
                console.log(err);
@@ -21,7 +21,7 @@ router.get("/initbdd", async (req, res) => {
             }
          };
 
-      await Offer.remove({}),
+      await Offer.deleteMany({}),
          function (err) {
             if (err) {
                console.log(err);
@@ -29,6 +29,24 @@ router.get("/initbdd", async (req, res) => {
                res.end("success");
             }
          };
+
+      try {
+         const deleteResources = await cloudinary.v2.api.delete_resources_by_tag(
+            "avatar"
+         );
+         console.log("deleteResources ===>  ", deleteResources);
+      } catch (error) {
+         console.log("deleteResources ===>  ", error.message);
+      }
+
+      try {
+         const deleteResources = await cloudinary.v2.api.delete_resources_by_tag(
+            "offers"
+         );
+         console.log("deleteResources ===>  ", deleteResources);
+      } catch (error) {
+         console.log("deleteResources ===>  ", error.message);
+      }
 
       const users = {
          user1: {
@@ -36,24 +54,28 @@ router.get("/initbdd", async (req, res) => {
             username: "Corinne",
             phone: "0101010101",
             password: "azerty01",
+            avatar_user: { path: "./pictures/1.png" },
          },
          user2: {
             email: "brice@lereacteur.io",
             username: "Brice",
             phone: "0202020202",
             password: "azerty02",
+            avatar_user: { path: "./pictures/2.png" },
          },
          user3: {
             email: "bastien@lereacteur.io",
             username: "Bastien",
             phone: "0303030303",
             password: "azerty03",
+            avatar_user: { path: "./pictures/3.png" },
          },
          user4: {
             email: "alexis@lereacteur.io",
             username: "Alexis",
             phone: "0404040404",
             password: "azerty03",
+            avatar_user: { path: "./pictures/4.png" },
          },
       };
       const article = {
@@ -68,7 +90,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Blanc" },
                { EMPLACEMENT: "Trignac, France" },
             ],
-            picture: "../pictures/chaussure1.png",
+            picture: { path: "./pictures/chaussure1.png" },
          },
          article2: {
             title: "Escarpins",
@@ -82,7 +104,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Noir" },
                { EMPLACEMENT: "Bordeaux, France" },
             ],
-            picture: "../pictures/chaussure2.png",
+            picture: { path: "./pictures/chaussure2.png" },
          },
          article3: {
             title: "Boots",
@@ -96,7 +118,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Noir" },
                { EMPLACEMENT: "Paris, France" },
             ],
-            picture: "../pictures/chaussure3.png",
+            picture: { path: "./pictures/chaussure3.png" },
          },
          article4: {
             title: "Boots",
@@ -109,7 +131,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Blanc" },
                { EMPLACEMENT: "Marseille, France" },
             ],
-            picture: "../pictures/chaussure4.png",
+            picture: { path: "./pictures/chaussure4.png" },
          },
          article5: {
             title: "Chaussures adidas noires",
@@ -122,7 +144,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Noir" },
                { EMPLACEMENT: "Lille, France" },
             ],
-            picture: "../pictures/chaussure5.png",
+            picture: { path: "./pictures/chaussure5.png" },
          },
          article6: {
             title: "Robe Holy, rayures bohème, Sezane",
@@ -136,7 +158,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Orange" },
                { EMPLACEMENT: "Nice, France" },
             ],
-            picture: "../pictures/robe1.png",
+            picture: { path: "./pictures/robe1.png" },
          },
          article7: {
             title: "Robe noir T.S",
@@ -149,7 +171,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Noir" },
                { EMPLACEMENT: "Madrid, Espagne" },
             ],
-            picture: "../pictures/robe2.png",
+            picture: { path: "./pictures/robe2.png" },
          },
          article8: {
             title: "Robe d’été fille Roxy",
@@ -162,7 +184,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Rose" },
                { EMPLACEMENT: "Bourges, France" },
             ],
-            picture: "../pictures/robe3.png",
+            picture: { path: "./pictures/robe3.png" },
          },
          article9: {
             title: "Robe roxy",
@@ -175,7 +197,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Vert" },
                { EMPLACEMENT: "Nantes, France" },
             ],
-            picture: "../pictures/robe4.png",
+            picture: { path: "./pictures/robe4.png" },
          },
          article10: {
             title: "Robe grise",
@@ -189,7 +211,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Gris" },
                { EMPLACEMENT: "Paris, France" },
             ],
-            picture: "../pictures/robe5.png",
+            picture: { path: "./pictures/robe5.png" },
          },
          article11: {
             title: "Chapeau noir 100% laine Mango",
@@ -203,7 +225,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Noir" },
                { EMPLACEMENT: "Paris, France" },
             ],
-            picture: "../pictures/chapeau1.png",
+            picture: { path: "./pictures/chapeau1.png" },
          },
          article12: {
             title: "Casquette New York",
@@ -216,7 +238,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Noir" },
                { EMPLACEMENT: "Lyon, France" },
             ],
-            picture: "../pictures/chapeau2.png",
+            picture: { path: "./pictures/chapeau2.png" },
          },
          article13: {
             title: "Bonnet hiver Napapijri",
@@ -230,7 +252,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Jaune" },
                { EMPLACEMENT: "Paris, France" },
             ],
-            picture: "../pictures/chapeau3.png",
+            picture: { path: "./pictures/chapeau3.png" },
          },
          article14: {
             title: "Chapeau ou postillon gendarmerie",
@@ -243,7 +265,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Noir" },
                { EMPLACEMENT: "Vannes, France" },
             ],
-            picture: "../pictures/chapeau4.png",
+            picture: { path: "./pictures/chapeau4.png" },
          },
          article15: {
             title: "Chapeau Lack of color",
@@ -256,7 +278,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Jaune" },
                { EMPLACEMENT: "Biarritz, France" },
             ],
-            picture: "../pictures/chapeau5.png",
+            picture: { path: "./pictures/chapeau5.png" },
          },
          article16: {
             title: "Veste cuir",
@@ -269,7 +291,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Noir" },
                { EMPLACEMENT: "Lille, France" },
             ],
-            picture: "../pictures/veste1.png",
+            picture: { path: "./pictures/veste1.png" },
          },
          article17: {
             title: "Veste vintage wearguard L couleur vert céladon",
@@ -283,7 +305,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Vert" },
                { EMPLACEMENT: "Strabourg, France" },
             ],
-            picture: "../pictures/veste2.png",
+            picture: { path: "./pictures/veste2.png" },
          },
          article18: {
             title: "Manteau long léger ",
@@ -296,7 +318,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Gris" },
                { EMPLACEMENT: "Dublin, Irlande" },
             ],
-            picture: "../pictures/veste3.png",
+            picture: { path: "./pictures/veste3.png" },
          },
          article19: {
             title: "Manteau court zara ",
@@ -310,7 +332,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Marron" },
                { EMPLACEMENT: "Limoges, France" },
             ],
-            picture: "../pictures/veste4.png",
+            picture: { path: "./pictures/veste4.png" },
          },
          article20: {
             title: "Veste H&M",
@@ -323,7 +345,7 @@ router.get("/initbdd", async (req, res) => {
                { COULEUR: "Gris" },
                { EMPLACEMENT: "Paris, France" },
             ],
-            picture: "../pictures/veste5.png",
+            picture: { path: "./pictures/veste5.png" },
          },
       };
       let ComptArt = 0;
@@ -337,12 +359,21 @@ router.get("/initbdd", async (req, res) => {
          );
          const token = uid2(64);
 
+         const result = await cloudinary.uploader.upload(
+            users["user" + i_user].avatar_user.path,
+            {
+               folder: `/lereacteur/vinted-api/avatar/`,
+               tag: "avatar",
+            }
+         );
+
          // step 2 : create new user
          const newUser = new User({
             email: users["user" + i_user].email,
             account: {
                username: users["user" + i_user].username,
                phone: users["user" + i_user].phone,
+               avatar: result,
             },
             token: token,
             hash: hash,
@@ -379,16 +410,17 @@ router.get("/initbdd", async (req, res) => {
                owner: newUser,
             });
 
-            /*  // send picture à cloudinary
+            // send picture à cloudinary
             const result = await cloudinary.uploader.upload(
-               article["article" + ComptArt].picture,
+               article["article" + ComptArt].picture.path,
                {
-                  folder: `/vinted/offers/${newOffer._id}`,
+                  folder: "/lereacteur/vinted-api/",
+                  tag: "offers",
                }
             );
 
             // add result upload in newOffer
-            newOffer.product_image = result;*/
+            newOffer.product_image = result;
 
             await newOffer.save();
          }
@@ -398,7 +430,7 @@ router.get("/initbdd", async (req, res) => {
          "------------- Base de donnée réinitialisée avec succès. Import de 4 users et de 20 offres-------------"
       );
    } catch (error) {
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ error: error });
    }
 });
 module.exports = router;

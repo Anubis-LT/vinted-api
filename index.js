@@ -12,16 +12,26 @@ const app = express();
 app.use(formidable());
 app.use(cors());
 
-mongoose.connect(process.env.MONGODB_URI, {
-   useUnifiedTopology: true,
-   useNewUrlParser: true,
-   useCreateIndex: true,
-});
+mongoose.connect(
+   process.env.MONGODB_URI
+      ? process.env.MONGODB_URI
+      : "mongodb://localhost:27017",
+   {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+   }
+);
 
-cloudinary.config({
+/*cloudinary.config({
    cloud_name: process.env.CLOUD_NAME,
    api_key: process.env.API_KEY,
    api_secret: process.env.API_SECRET,
+})*/
+cloudinary.config({
+   cloud_name: "doxqbt8h2",
+   api_key: "498176427155934",
+   api_secret: "dPKqkgf1yNYgR2nd2ytWgzaUE7Q",
 });
 
 // Import des routes
@@ -33,11 +43,6 @@ app.use(offerRoutes);
 const importdataRoutes = require("./routes/importdata");
 app.use(importdataRoutes);
 
-/*app.get("/", (req, res) => {
-   res.status(200).send(
-      "<html><header><title>Vinted-Api</title></header><body bgcolor='E3F0F0'><h1><center>Vinted-api</center></h1><p></p><p></p><p>Le Réacteur - Grégory Le Terte 2021</p></body></html>"
-   );
-});*/
 app.get("/", (req, res) => {
    fs.readFile("./html/index.html")
       .then((contents) => {
@@ -56,6 +61,6 @@ app.all("*", (req, res) => {
    res.status(404).json({ message: "Cette route n'existe pas" });
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT ? process.env.PORT : 3001, () => {
    console.log("Server Started");
 });

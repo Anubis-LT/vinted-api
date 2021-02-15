@@ -107,44 +107,42 @@ router.get("/offers", async (req, res) => {
          page = Number(req.query.page);
       }
 
-      // SKIP = ignore the first n results
-      // The user asks for page 1 (the first 0 results are ignored)
-      // (page - 1) * limit = 0
-
-      // The user asks for page 2 (we ignore the first results limits)
-      // (page - 1) * limit = 5 (if limit = 5)
-
       let limit = Number(req.query.limit);
 
-      // Returns the number of results found according to the filters.
+      const offers = await Offer.find(filters)
+         .populate({
+            path: "owner",
+            select: "account",
+         })
+         .sort(sort)
+         .skip((page - 1) * limit) // ignorer les x résultats
+         .limit(limit); // renvoyer y résultats
+
+      // cette ligne va nous retourner le nombre d'annonces trouvées en fonction des filtres
       const count = await Offer.countDocuments(filters);
 
-      const offers = await Offer.find(filters)
-         .sort(sort)
-         .skip((page - 1) * limit)
-         .limit(limit)
-         .select("product_name product_price");
-      res.status(200).json({
+      res.json({
          count: count,
          offers: offers,
       });
    } catch (error) {
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ error: error });
    }
 });
 
-router.get("/offers/:id", async (req, res) => {
+router.get("/offer/:id", async (req, res) => {
    try {
-      // Returns user with id
-      // Problem with populate
-      const offers = await Offer.findById(req.params.id).populate("user");
-      res.status(200).json({ offers: offers });
+      const offer = await Offer.findById(req.params.id).populate({
+         path: "owner",
+         select: "account.username account.phone account.avatar",
+      });
+      res.json(offer);
    } catch (error) {
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ message: error });
    }
 });
 
-router.delete("/offers/:id", async (req, res) => {
+router.delete("/offer/:id", async (req, res) => {
    try {
       // Returns user with id
       // Problem with populate

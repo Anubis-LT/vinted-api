@@ -3,7 +3,7 @@ const router = express.Router();
 const uid2 = require("uid2");
 const SHA256 = require("crypto-js/sha256");
 const encBase64 = require("crypto-js/enc-base64");
-
+const cloudinary = require("cloudinary").v2;
 const User = require("../models/User");
 const Offer = require("../models/Offer");
 
@@ -40,22 +40,38 @@ router.post("/user/signup", async (req, res) => {
 
       if (!user) {
          // All fields are complete ?
-         if (req.fields.email && req.fields.username && req.fields.password) {
+         if (
+            req.fields.email &&
+            req.fields.username &&
+            req.fields.password &&
+            req.files.picture
+         ) {
             // Step 1 : crypt paswword
             const salt = uid2(64);
             const hash = SHA256(req.fields.password + salt).toString(encBase64);
             const token = uid2(64);
+
+            // avatar picture
+            const result = await cloudinary.uploader.upload(
+               req.files.picture.path,
+               {
+                  folder: `/lereacteur/vinted-api/avatar/`,
+               }
+            );
+
             // Step 2 : Create a new user
             const newUser = new User({
                email: req.fields.email,
                account: {
                   username: req.fields.username,
                   phone: req.fields.phone,
+                  avatar: result,
                },
                token: token,
                hash: hash,
                salt: salt,
             });
+
             // Step 3 : Backup user
             await newUser.save();
             // Step 4 : reply to the user
@@ -65,6 +81,7 @@ router.post("/user/signup", async (req, res) => {
                account: {
                   username: newUser.account.username,
                   phone: newUser.account.phone,
+                  avatar: newUser.account.avatar,
                },
             });
          } else {
@@ -75,7 +92,7 @@ router.post("/user/signup", async (req, res) => {
          res.status(400).json({ message: "This email already has an account" });
       }
    } catch (error) {
-      res.status(400).json({ error: error.message });
+      res.status(405).json({ error: error });
    }
 });
 
